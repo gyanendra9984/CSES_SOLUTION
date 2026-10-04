@@ -51,7 +51,7 @@ int main()
 
         for (int mask = 0; mask < total_masks; mask++)
         {
-            if (dp[mask] == 0)
+            if(dp[mask] == 0)
                 continue;
 
             for (int next_mask : transitions[mask])

@@ -9,22 +9,43 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long int
- 
-void solve(){
-      int n;cin>>n;
-      int ans=0;
-      for(int i=1;i*i<=n;i++){
-        if(n%i==0 && i*i!=n){
-            ans += 2;
-        }else if(n%i==0){
-            ans++;
+
+void solve()
+{
+    int n;
+    cin >> n;
+
+    vector<int> freq(1000001, 0);
+
+    int mx = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        int x;
+        cin >> x;
+        freq[x]++;
+        mx = max(mx, x);
+    }
+
+    for (int d = mx; d >= 1; d--)
+    {
+        int cnt = 0;
+
+        for (int multiple = d; multiple <= mx; multiple += d)
+        {
+            cnt += freq[multiple];
+
+            if (cnt >= 2)
+                break;
         }
-      }
-      cout << ans << endl;
+
+        if (cnt >= 2)
+        {
+            cout << d << endl;
+            return;
+        }
     }
+}
 int main(){
-    int t;cin >> t;
-    while (t--){
         solve();
-    }
     return 0; }

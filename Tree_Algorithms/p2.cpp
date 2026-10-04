@@ -10,21 +10,6 @@
 using namespace std;
 #define ll long long int
  
-void solve(){
-      int n;cin>>n;
-      int ans=0;
-      for(int i=1;i*i<=n;i++){
-        if(n%i==0 && i*i!=n){
-            ans += 2;
-        }else if(n%i==0){
-            ans++;
-        }
-      }
-      cout << ans << endl;
-    }
 int main(){
-    int t;cin >> t;
-    while (t--){
-        solve();
-    }
+    
     return 0; }

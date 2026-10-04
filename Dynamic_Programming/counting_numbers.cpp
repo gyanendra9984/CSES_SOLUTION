@@ -1,52 +1,53 @@
-#include <iostream>
-#include <vector>
-#include <algorithm> // Include this header for reverse
-#include <cstring>
+#include <bits/stdc++.h>
 using namespace std;
 
-vector<int> getDigits(long long x)
-{
-    vector<int> digits;
-    while (x > 0)
-    {
-        digits.push_back(x % 10);
-        x /= 10;
-    }
-    reverse(digits.begin(), digits.end());
-    return digits;
-}
+using int64 = long long;
 
-long long dp[20][2][10];
+long long dp[20][11][2][2];
+string s;
 
-long long countValidNumbers(int pos, bool tight, int last_digit, vector<int> &digits)
+long long solve(int pos, int prev, int tight, int started)
 {
-    if (pos == digits.size())
+    if (pos == (int)s.size())
         return 1;
 
-    if (dp[pos][tight][last_digit] != -1)
-        return dp[pos][tight][last_digit];
+    long long &res = dp[pos][prev][tight][started];
+    if (res != -1)
+        return res;
 
-    long long result = 0;
-    int limit = tight ? digits[pos] : 9;
+    res = 0;
 
-    for (int digit = 0; digit <= limit; digit++)
+    int limit = tight ? (s[pos] - '0') : 9;
+
+    for (int d = 0; d <= limit; d++)
     {
-        if (digit != last_digit)
+        int ntight = tight && (d == limit);
+
+        if (!started && d == 0)
         {
-            result += countValidNumbers(pos + 1, tight && (digit == limit), digit, digits);
+            res += solve(pos + 1, 10, ntight, 0);
+        }
+        else
+        {
+            if (started && d == prev)
+                continue;
+
+            res += solve(pos + 1, d, ntight, 1);
         }
     }
 
-    return dp[pos][tight][last_digit] = result;
+    return res;
 }
 
-long long countNumbers(long long x)
+long long count_valid(long long x)
 {
     if (x < 0)
         return 0;
-    vector<int> digits = getDigits(x);
+
+    s = to_string(x);
     memset(dp, -1, sizeof(dp));
-    return countValidNumbers(0, true, -1, digits);
+
+    return solve(0, 10, 1, 0);
 }
 
 int main()
@@ -54,7 +55,6 @@ int main()
     long long a, b;
     cin >> a >> b;
 
-    cout << countNumbers(b) - countNumbers(a - 1) << endl;
-
+    cout << count_valid(b) - count_valid(a - 1) << '\n';
     return 0;
 }

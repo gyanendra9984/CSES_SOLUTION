@@ -9,22 +9,27 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long int
- 
-void solve(){
-      int n;cin>>n;
-      int ans=0;
-      for(int i=1;i*i<=n;i++){
-        if(n%i==0 && i*i!=n){
-            ans += 2;
-        }else if(n%i==0){
-            ans++;
-        }
-      }
-      cout << ans << endl;
+
+ll solve(int i, int n, vector<ll>& a, ll s1, ll s2)
+{
+    if (i == n)
+    {
+        return abs(s1 - s2);
     }
-int main(){
-    int t;cin >> t;
-    while (t--){
-        solve();
+    else
+    {
+        return min(solve(i + 1, n, a, s1 + a[i], s2), solve(i + 1, n, a, s1, s2 + a[i]));
     }
-    return 0; }
+}
+int main()
+{
+    int n;
+    cin >> n;
+    vector<ll> a(n);
+    for (int i = 0; i < n; i++)
+    {
+        cin >> a[i];
+    }
+    cout << solve(0, n, a, 0, 0);
+    return 0;
+}

@@ -18,21 +18,22 @@ bool possible(vector<string>& s,int q,int i){
            return false;
        }
    }
-    for(int j=1;j<8;j++){
-         if(q-j>=0 && i-j>=0 && s[q-j][i-j]=='Q'){
-              return false;
-         }
-         if(q+j<8 && i+j<8 && s[q+j][i+j]=='Q'){
-              return false;
-         }
-         if(q-j>=0 && i+j<8 && s[q-j][i+j]=='Q'){
-                return false;
-        }
-        if(q+j<8 && i-j>=0 && s[q+j][i-j]=='Q'){
-                return false;
-        }
-    }
-    return true;
+  
+       for(int j=1;j<8;j++){
+            if(q-j>=0 && i-j>=0 && s[q-j][i-j]=='Q'){
+                 return false;
+            }
+            if(q+j<8 && i+j<8 && s[q+j][i+j]=='Q'){
+                 return false;
+            }
+            if(q-j>=0 && i+j<8 && s[q-j][i+j]=='Q'){
+                   return false;
+           }
+           if(q+j<8 && i-j>=0 && s[q+j][i-j]=='Q'){
+                   return false;
+           }
+       }
+       return true;
 }
 void rec(vector<string>& s,int& ans,int q){
    if(q==8){
